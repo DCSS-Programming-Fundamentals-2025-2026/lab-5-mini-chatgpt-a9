@@ -20,7 +20,7 @@
 
 ### Повноцінні unit-тести
 
-Додано проєкт із 2+ unit-тестами для перевірки правильності викликів планувальника та накопичення метрик, без залежностей на Moq.
+Додано проєкт із 2+ unit-тестами для перевірки правильності викликів планувальника та накопичення метрик.
 
 ---
 
@@ -161,13 +161,13 @@ public class Batch
 
 Проєкт включає **2 основні юніт-тести**:
 
-### ✅ NGramTrainingLoop_CallsTrain_And_TriggersScheduler
+### NGramTrainingLoop_CallsTrain_And_TriggersScheduler
 
 - Перевіряє, що N-Gram модель викликає `Train()` потрібну кількість разів
 - Перевіряє, що `CheckpointScheduler` викликається один раз за епоху
 - Перевіряє запис метрик для кожної епохи
 
-### ✅ NeuralNetworkTrainingLoop_AccumulatesLoss
+### NeuralNetworkTrainingLoop_AccumulatesLoss
 
 - Перевіряє коректне накопичення loss значень
 - Перевіряє використання `LearningRate` із конфігурації
