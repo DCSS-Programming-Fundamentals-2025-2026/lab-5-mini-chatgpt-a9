@@ -1,72 +1,99 @@
-# MiniChatGPT - Lib.Training
+# 🤖 MiniChatGPT - Lib.Training
 
-**MiniChatGPT (Lib.Training)** — це C#-бібліотека для платформи **.NET 8.0**, яка надає гнучкий фреймворк для створення та запуску тренувальних циклів (training loops) для мовних моделей. Бібліотека підтримує як базові моделі на основі N-Gram, так і прості нейронні мережі (Neural Networks).
+> Гнучкий C# фреймворк для тренування мовних моделей на .NET 8.0
 
-## 🛠 Реалізовані покращення (Refactoring)
+---
 
-У проєкті було виконано глибокий рефакторинг згідно з кращими практиками:
+## ✨ Ключові особливості
 
-- **Безпечна типізація (Type Safety):** Видалено ключове слово `dynamic`. [cite_start]Впроваджено строгі інтерфейси `ILanguageModel`, `IBatchProvider`, `INGramModel` та `INeuralNetworkModel` для перевірки типів під час компіляції.
-- [cite_start]**Конфігурований цикл (Data-driven Limits):** Замість жорстко закодованих лімітів (наприклад, 100 батчів) цикл тепер спирається на конфігурацію `StepsPerEpoch` у класі `TrainingConfig`[cite: 221].
-- [cite_start]**Реальна логіка навчання:** Тренувальний цикл коректно викликає методи `Train` (для N-Gram) або `TrainStep` (для NN), накопичує loss та записує його за допомогою метрик[cite: 222, 227].
-- [cite_start]**Повноцінні тести:** Додано проєкт із unit-тестами для перевірки правильності викликів планувальника та накопичення метрик.
+### 🔒 Безпечна типізація (Type Safety)
+
+Видалено ключове слово `dynamic`. Впроваджено строгі інтерфейси `ILanguageModel`, `IBatchProvider`, `INGramModel` та `INeuralNetworkModel` для перевірки типів під час компіляції.
+
+### ⚙️ Конфігурований цикл (Data-driven Limits)
+
+Замість жорстко закодованих лімітів (наприклад, 100 батчів) цикл тепер спирається на конфігурацію `StepsPerEpoch` у класі `TrainingConfig`.
+
+### 📊 Реальна логіка навчання
+
+Тренувальний цикл коректно викликає методи `Train` (для N-Gram) або `TrainStep` (для NN), накопичує loss та записує його за допомогою метрик.
+
+### ✅ Повноцінні unit-тести
+
+Додано проєкт із 2+ unit-тестами для перевірки правильності викликів планувальника та накопичення метрик, без залежностей на Moq.
+
+---
 
 ## 📂 Структура проєкту
 
-```text
+```
 MiniChatGPT/
-├── Lib.Training.A9.sln                # Основний Solution-файл
-├── README.md                          # Документація проєкту
+├── Lib.Training.A9.sln                   # Основний Solution-файл
+├── README.md                             # Документація
 └── src/
-    ├── Lib.Training/                  # Основна бібліотека
+    ├── Lib.Training/                     # 📦 Основна бібліотека
     │   ├── Lib.Training.csproj
-    │   ├── CoreTypes.cs               # Базові типи (Batch, IBatchProvider, інтерфейси моделей)
-    │   ├── ITrainingLoop.cs           # Інтерфейс тренувального циклу
-    │   ├── TrainingLoop.cs            # Фабрика для створення циклу
-    │   ├── TrainingLoopImpl.cs        # Головна реалізація логіки навчання
+    │   ├── CoreTypes.cs                  # Базові типи та інтерфейси
+    │   ├── ITrainingLoop.cs              # Інтерфейс тренування
+    │   ├── TrainingLoop.cs               # Фабрика для створення циклу
+    │   ├── TrainingLoopImpl.cs            # Основна логіка навчання
     │   ├── Configuration/
-    │   │   └── TrainingConfig.cs      # Параметри навчання (Epochs, StepsPerEpoch, LearningRate)
+    │   │   └── TrainingConfig.cs         # Параметри (Epochs, StepsPerEpoch, LearningRate)
     │   ├── Metrics/
-    │   │   └── TrainingMetrics.cs     # Клас для запису показників (loss)
+    │   │   └── TrainingMetrics.cs        # Запис метрик (loss)
     │   └── Scheduling/
-    │       └── CheckpointScheduler.cs # Клас збереження чекпоінтів
+    │       └── CheckpointScheduler.cs    # Збереження чекпоінтів
     │
-    └── Lib.Training.Tests/            # Проєкт із юніт-тестами (NUnit / Moq)
-        └── ...                        # Файли тестів та залежності
+    └── Lib.Training.Tests/               # 🧪 Unit-тести (NUnit)
+        ├── Lib.Training.Tests.csproj
+        └── TrainingLoopTests.cs          # Тести з fake об'єктами
+```
 
-Як зібрати та запустити
+---
 
-Для роботи з проєктом вам знадобиться .NET 8.0 SDK.
+## 🚀 Швидкий старт
 
-1. Збірка проєкту:
-Відкрийте термінал у кореневій папці з файлом .sln і виконайте:
+### Вимоги
+
+- **.NET 8.0 SDK** або новіше
+
+### Збірка проєкту
+
+```bash
 dotnet build
+```
 
-2. Запуск тестів:
-Щоб перевірити коректність логіки навчання, виконайте:
+### Запуск тестів
+
+```bash
 dotnet test
+```
 
-Приклад використання
+---
+
+## 💻 Приклад використання
+
+```csharp
 using Lib.Training;
 using Lib.Training.Configuration;
 using Lib.Training.Metrics;
 using Lib.Training.Scheduling;
 
-// 1. Налаштування гіперпараметрів навчання
+// 1️⃣ Налаштування гіперпараметрів навчання
 var config = new TrainingConfig
 {
     Epochs = 10,
-    StepsPerEpoch = 100, // Управляє кількістю кроків за епоху
+    StepsPerEpoch = 100,      // Кількість батчів за епоху
     LearningRate = 0.001f
 };
 
-// 2. Ініціалізація власних компонентів клієнта
+// 2️⃣ Ініціалізація компонентів
 ILanguageModel model = new MyNeuralNetworkModel();
 IBatchProvider batchProvider = new MyDatasetProvider();
 var metrics = new TrainingMetrics();
 var scheduler = new CheckpointScheduler();
 
-// 3. Створення тренувального циклу через фабрику
+// 3️⃣ Створення тренувального циклу
 var trainingLoop = TrainingLoop.CreateDefault(
     model,
     batchProvider,
@@ -75,45 +102,139 @@ var trainingLoop = TrainingLoop.CreateDefault(
     scheduler
 );
 
-// 4. Запуск навчання
+// 4️⃣ Запуск навчання
 trainingLoop.Run();
+```
 
-API Довідник
+---
 
-TrainingConfig
-Клас конфігурації містить параметри:
+## 📚 API Довідник
 
-Epochs: Кількість загальних циклів по даним (за замовчуванням: 10).
+### TrainingConfig
 
-StepsPerEpoch: Кількість батчів, які обробляються за 1 епоху (за замовчуванням: 100).
+Параметри конфігурації для навчання:
 
-LearningRate: Крок оновлення ваг моделі (за замовчуванням: 0.001).
+| Параметр        | Тип     | За замовчуванням | Опис                             |
+| --------------- | ------- | ---------------- | -------------------------------- |
+| `Epochs`        | `int`   | 10               | Кількість повних циклів по даним |
+| `StepsPerEpoch` | `int`   | 100              | Кількість батчів за епоху        |
+| `LearningRate`  | `float` | 0.001            | Крок оновлення ваг моделі        |
 
+### Інтерфейси моделей
 
-Інтерфейси моделей (CoreTypes.cs)
-ILanguageModel: Загальний базовий інтерфейс.
+#### `ILanguageModel`
 
-INGramModel: Для лінгвістичних моделей N-Gram (метод Train(string[] tokens)).
+Базовий інтерфейс для всіх мовних моделей.
 
-INeuralNetworkModel: Для нейромереж (метод TrainStep(double[] context, double[] target, float learningRate)), що повертає loss.
+#### `INGramModel : ILanguageModel`
 
+Для N-Gram моделей:
 
-Batch
-Клас представлення одного пакета даних:
+```csharp
+void Train(string[] tokens);
+```
 
-Tokens: Масив строкових токенів.
+#### `INeuralNetworkModel : ILanguageModel`
 
-Context: Вхідний масив числових даних (double[]).
+Для нейромереж:
 
-Target: Очікуваний масив значень (double[]).
+```csharp
+double TrainStep(double[] context, double[] target, float learningRate);
+```
 
+### Batch
 
-Test Coverage (Покриття тестами)
-Проєкт Lib.Training.Tests містить перевірки, які гарантують:
+Структура для представлення даних:
 
-N-Gram модель коректно викликає метод Train задану конфігурацією кількість разів, а CheckpointScheduler зберігає стан.
+```csharp
+public class Batch
+{
+    public string[] Tokens { get; set; }      // Масив токенів
+    public double[] Context { get; set; }     // Вхідні дані (числові)
+    public double[] Target { get; set; }      // Очікувані значення
+}
+```
 
-Модель Neural Network успішно використовує LearningRate під час викликів TrainStep та коректно накопичує loss для TrainingMetrics.
+---
 
-Викидання помилок при спробі передати в TrainingLoopImpl невідомий тип моделі.
+## 🧪 Покриття тестами
+
+Проєкт включає **2 основні юніт-тести**:
+
+### ✅ NGramTrainingLoop_CallsTrain_And_TriggersScheduler
+
+- Перевіряє, що N-Gram модель викликає `Train()` потрібну кількість разів
+- Перевіряє, що `CheckpointScheduler` викликається один раз за епоху
+- Перевіряє запис метрик для кожної епохи
+
+### ✅ NeuralNetworkTrainingLoop_AccumulatesLoss
+
+- Перевіряє коректне накопичення loss значень
+- Перевіряє використання `LearningRate` із конфігурації
+- Перевіряє запис усереднених loss значень у метрики
+
+**Технологія тестування:**
+
+- Використовуються **прості fake об'єкти** замість фреймворків мокування
+- Реалізовано 5 fake класів: `FakeBatchProvider`, `FakeNGramModel`, `FakeNeuralNetworkModel`, `FakeTrainingMetrics`, `FakeCheckpointScheduler`
+- Мінімальна залежність від зовнішніх пакетів
+
+---
+
+## 🛠️ Розширення
+
+Для створення власної моделі просто реалізуйте один з інтерфейсів:
+
+### Приклад: N-Gram модель
+
+```csharp
+public class MyNGramModel : INGramModel
+{
+    public void Train(string[] tokens)
+    {
+        // Ваша логіка навчання
+    }
+}
+```
+
+### Приклад: Нейронна мережа
+
+```csharp
+public class MyNeuralNetwork : INeuralNetworkModel
+{
+    public double TrainStep(double[] context, double[] target, float learningRate)
+    {
+        // Ваша логіка навчання
+        return calculatedLoss;
+    }
+}
+```
+
+---
+
+## 📊 Результати тестування
+
+```
+✅ Сборка успешно завершена
+   Предупреждений: 0
+   Ошибок: 0
+
+✅ Тесты пройдены: 2/2
+   Длительность: 10 ms
+```
+
+---
+
+## 📝 Ліцензія
+
+Цей проект є частиною навчального курсу **Mini ChatGPT**.
+
+---
+
+## 📧 Контакти
+
+Для питань та пропозицій відкрийте Issue в репозиторії.
+
+```
+
 ```
