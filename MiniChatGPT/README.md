@@ -210,8 +210,6 @@ public class MyNeuralNetwork : INeuralNetworkModel
 }
 ```
 
----
-
 ## Результати тестування
 
 ```
@@ -221,7 +219,4 @@ public class MyNeuralNetwork : INeuralNetworkModel
 
     Тести пройдено: 2/2 
     Тривалість: 10 ms
-```
-
-
 ```
