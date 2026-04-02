@@ -7,9 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8A334F6A-3C6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.Training", "src\Lib.Training\Lib.Training.csproj", "{36D8A3BB-597E-41AE-A393-5477AE1A5135}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AEAC5CFE-16CD-472C-B8B0-6606048B8CCC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.Training.Tests", "tests\Lib.Training.Tests\Lib.Training.Tests.csproj", "{90026E2F-DE3E-449C-B125-3A8BD964E335}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.Training.Tests", "src\Lib.Training.Tests\Lib.Training.Tests.csproj", "{90026E2F-DE3E-449C-B125-3A8BD964E335}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +29,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{36D8A3BB-597E-41AE-A393-5477AE1A5135} = {8A334F6A-3C6E-499C-9D15-932481E8DB58}
-		{90026E2F-DE3E-449C-B125-3A8BD964E335} = {AEAC5CFE-16CD-472C-B8B0-6606048B8CCC}
+		{90026E2F-DE3E-449C-B125-3A8BD964E335} = {8A334F6A-3C6E-499C-9D15-932481E8DB58}
 	EndGlobalSection
 EndGlobal
